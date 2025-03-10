@@ -125,6 +125,10 @@ export class SongsService {
     );
   }
 
+  getNextSongId() {
+    return Math.max(...this._songs().map((s) => s.id), 0) + 1;
+  }
+
   private addSongToState(song: Song) {
     this._songs.update((songs) => [...songs, song]);
   }

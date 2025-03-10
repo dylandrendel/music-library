@@ -42,6 +42,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 export class SongsManagerComponent {
   dataSource: MatTableDataSource<Song>;
   displayedColumns: string[] = [
+    'id',
     'title',
     'artist',
     'releaseDate',

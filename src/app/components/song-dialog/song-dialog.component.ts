@@ -105,7 +105,7 @@ export class SongDialogComponent implements OnInit {
         artist: titleCase.transform(form.artist!),
         releaseDate: form.releaseDate!,
         price: Math.round(form.price! * 100) / 100, // round to 2 decimal places
-        id: this.song ? this.song.id : this.songsService.songs().length + 1,
+        id: this.song ? this.song.id : this.songsService.getNextSongId(),
       };
       const updateObs$ = this.song
         ? this.songsService.updateSong(song)
