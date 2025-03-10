@@ -113,6 +113,24 @@ describe('SongsService', () => {
       expect(snackbarSpy.showError).toHaveBeenCalledWith('Failed to add song');
       expect(service.songs()).not.toContain(newSong);
     }));
+
+    it('should correctly set the next song ID', fakeAsync(() => {
+      // Arrange
+      const newSong = new Song(
+        99,
+        'Test Song',
+        'Test Artist',
+        new Date(),
+        1.99,
+      );
+
+      // Act
+      service.addSong(newSong).subscribe();
+      tick();
+
+      // Assert
+      expect(service.getNextSongId()).toBe(100);
+    }));
   });
 
   describe('updateSong', () => {

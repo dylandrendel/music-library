@@ -56,7 +56,7 @@ describe('SongDialogComponent', () => {
     ]);
     songsServiceSpy = jasmine.createSpyObj(
       'SongsService',
-      ['addSong', 'updateSong', 'songs'],
+      ['addSong', 'updateSong', 'songs', 'getNextSongId'],
       { updating: signal(false) },
     );
     songsServiceSpy.songs.and.returnValue([]);
@@ -226,6 +226,7 @@ describe('SongDialogComponent', () => {
       expect(calledArg.title).toBe('New Song');
       expect(calledArg.artist).toBe('New Artist');
       expect(calledArg.price).toBe(1.99);
+      expect(calledArg.releaseDate).toEqual(new Date('2023-01-01'));
 
       // Check that dialog was closed after successful operation
       expect(dialogRefSpy.close).toHaveBeenCalled();
