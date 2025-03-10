@@ -1,0 +1,36 @@
+@use '@angular/material' as mat;
+@use 'pera-theme-colors' as pera;
+@use 'helpers' as helpers;
+@use 'colors' as colors;
+@use 'components/button' as button;
+@use 'components/snackbar' as snackbar;
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font: var(--mat-sys-body-medium);
+  color: var(--text-dark-blue);
+  h1 {
+    font: var(--mat-sys-display-small);
+    color: var(--mat-sys-primary);
+  }
+}
+
+html {
+  @include mat.theme(
+    (
+      color: pera.$primary-palette,
+      typography: (
+        plain-family: Inter,
+        brand-family: Cabin,
+        bold-weight: 900,
+        medium-weight: 500,
+        regular-weight: 300,
+      ),
+      density: 0,
+    )
+  );
+}

@@ -1,0 +1,68 @@
+<h2 mat-dialog-title>{{ song ? 'Edit' : 'Add' }} Song</h2>
+<form [formGroup]="songForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <div class="col">
+      <div class="row" [class.col]="responsive.isMobile()">
+        <mat-form-field>
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" />
+          @if (songForm.get('title')!.hasError('required')) {
+            <mat-error>Title is required</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Artist</mat-label>
+          <input matInput formControlName="artist" />
+          @if (songForm.get('releaseDate')!.hasError('required')) {
+            <mat-error>Artist is required</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="row" [class.col]="responsive.isMobile()">
+        <mat-form-field>
+          <mat-label>Release Date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="releaseDate"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          @if (songForm.get('releaseDate')!.hasError('required')) {
+            <mat-error>Release date is required</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Price</mat-label>
+          <input
+            matInput
+            type="number"
+            class="right-align"
+            formControlName="price"
+            min="0"
+          />
+          <span matTextPrefix>$&nbsp;</span>
+          @if (songForm.get('price')!.hasError('required')) {
+            <mat-error>Price is required</mat-error>
+          }
+          @if (songForm.get('price')!.hasError('min')) {
+            <mat-error>Price must be greater than or equal to 0</mat-error>
+          }
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button type="submit" mat-flat-button [disabled]="songsService.updating()">
+      @if (!songsService.updating()) {
+        {{ song ? 'Save' : 'Add' }}
+      } @else {
+        <mat-spinner diameter="24"></mat-spinner>
+      }
+    </button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,35 @@
+.table-container {
+  max-width: 100%;
+  overflow: auto;
+  box-shadow: var(--mainShadow);
+}
+
+table {
+  width: 640px;
+}
+
+td.mat-column-actions {
+  width: 20px;
+  padding-right: 8px;
+}
+
+th.mat-column-position,
+td.mat-column-position {
+  padding-left: 8px;
+}
+
+.mat-mdc-table-sticky-border-elem-right {
+  border-left: 1px solid var(--mat-sys-outline-variant);
+}
+
+.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100px;
+  padding: 20px;
+  &.mobile {
+    max-width: 300px;
+  }
+}
