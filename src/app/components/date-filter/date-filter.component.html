@@ -2,6 +2,8 @@
   mat-icon-button
   [matMenuTriggerFor]="filterMenu"
   [matTooltip]="`Filter by ${label()}`"
+  aria-haspopup="true"
+  [attr.aria-label]="`Filter by ${label()}`"
 >
   <mat-icon>today</mat-icon>
 </button>
@@ -19,7 +21,7 @@
         (selectionChange)="comparisonSignal().set($event.value)"
       >
         @for (option of comparisonOptions; track $index) {
-          <mat-option [value]="option.value">
+          <mat-option [value]="option.value" role="option">
             {{ option.label }}
           </mat-option>
         }
@@ -43,8 +45,12 @@
 
     <div class="row space-between">
       <div></div>
-      <button mat-button (click)="dateSignal().set(null)">
-        <mat-icon>clear</mat-icon>
+      <button
+        mat-button
+        (click)="dateSignal().set(null)"
+        aria-label="Clear date filter"
+      >
+        <mat-icon aria-hidden="true">clear</mat-icon>
         Clear
       </button>
     </div>

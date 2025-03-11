@@ -1,62 +1,93 @@
-<div class="responsive-container">
+<div class="responsive-container" role="region" aria-labelledby="songsTitle">
   <div class="row space-between">
-    <h1>My Songs</h1>
-    <div class="row">
+    <h1 id="songsTitle">My Songs</h1>
+    <div class="row" role="toolbar" aria-label="Song filters and actions">
       <app-date-filter
         label="Release Date"
         [comparisonSignal]="songsService.dateFilterMode"
         [dateSignal]="songsService.dateFilter"
+        aria-label="Filter songs by release date"
       ></app-date-filter>
       <button
         mat-icon-button
         [disabled]="songsService.loadingSongs()"
         (click)="openDialog()"
         matTooltip="Add a new song"
+        aria-label="Add a new song"
       >
-        <mat-icon>add</mat-icon>
+        <mat-icon aria-hidden="true">add</mat-icon>
       </button>
     </div>
   </div>
 
   <div class="table-container">
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      aria-labelledby="songsTitle"
+    >
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col">
+          Id
+        </th>
         <td mat-cell *matCellDef="let row">{{ row.id }}</td>
       </ng-container>
       <ng-container matColumnDef="title">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col">
+          Title
+        </th>
         <td mat-cell *matCellDef="let row">{{ row.title }}</td>
       </ng-container>
 
       <ng-container matColumnDef="artist">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Artist</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col">
+          Artist
+        </th>
         <td mat-cell *matCellDef="let row">{{ row.artist }}</td>
       </ng-container>
 
       <ng-container matColumnDef="releaseDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Release Date</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col">
+          Release Date
+        </th>
         <td mat-cell *matCellDef="let row">{{ row.releaseDate | date }}</td>
       </ng-container>
 
       <ng-container matColumnDef="price">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col">
+          Price
+        </th>
         <td mat-cell *matCellDef="let row">{{ row.price | currency }}</td>
       </ng-container>
 
       <ng-container matColumnDef="actions" stickyEnd>
-        <th mat-header-cell *matHeaderCellDef></th>
+        <th mat-header-cell *matHeaderCellDef scope="col">
+          <span class="visually-hidden">Actions</span>
+        </th>
         <td mat-cell *matCellDef="let row">
-          <button mat-icon-button [matMenuTriggerFor]="actionsMenu">
-            <mat-icon>more_vert</mat-icon>
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="actionsMenu"
+            [attr.aria-label]="`Actions menu for ${row.title}`"
+          >
+            <mat-icon aria-hidden="true">more_vert</mat-icon>
           </button>
           <mat-menu #actionsMenu="matMenu">
-            <button mat-menu-item (click)="openDialog(row)">
-              <mat-icon>edit</mat-icon>
+            <button
+              mat-menu-item
+              (click)="openDialog(row)"
+              [attr.aria-label]="`Edit ${row.title}`"
+            >
+              <mat-icon aria-hidden="true">edit</mat-icon>
               <span>Edit</span>
             </button>
-            <button mat-menu-item (click)="deleteSong(row)">
-              <mat-icon>delete</mat-icon>
+            <button
+              mat-menu-item
+              (click)="deleteSong(row)"
+              [attr.aria-label]="`Delete ${row.title}`"
+            >
+              <mat-icon aria-hidden="true">delete</mat-icon>
               <span>Delete</span>
             </button>
           </mat-menu>
@@ -69,15 +100,28 @@
       <tr class="mat-row" *matNoDataRow>
         <td class="mat-cell" colspan="4">
           @if (songsService.loadingSongs()) {
-            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            <mat-progress-bar
+              mode="indeterminate"
+              aria-label="Loading songs"
+            ></mat-progress-bar>
           } @else if (songsService.dateFilter()) {
-            <div class="empty" [class.mobile]="responsive.isMobile()">
+            <div
+              class="empty"
+              [class.mobile]="responsive.isMobile()"
+              role="status"
+              aria-live="polite"
+            >
               No songs found with release date
               {{ songsService.dateFilterMode() }}
               {{ songsService.dateFilter() | date }}
             </div>
           } @else {
-            <div class="empty" [class.mobile]="responsive.isMobile()">
+            <div
+              class="empty"
+              [class.mobile]="responsive.isMobile()"
+              role="status"
+              aria-live="polite"
+            >
               No songs found
             </div>
           }
@@ -85,7 +129,10 @@
       </tr>
     </table>
     @if (songsService.updating()) {
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      <mat-progress-bar
+        mode="indeterminate"
+        aria-label="Updating songs"
+      ></mat-progress-bar>
     }
   </div>
 </div>

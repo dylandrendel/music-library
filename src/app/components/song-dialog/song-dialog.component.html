@@ -5,14 +5,14 @@
       <div class="row" [class.col]="responsive.isMobile()">
         <mat-form-field>
           <mat-label>Title</mat-label>
-          <input matInput formControlName="title" />
+          <input matInput formControlName="title" aria-required="true" />
           @if (songForm.get('title')!.hasError('required')) {
             <mat-error>Title is required</mat-error>
           }
         </mat-form-field>
         <mat-form-field>
           <mat-label>Artist</mat-label>
-          <input matInput formControlName="artist" />
+          <input matInput formControlName="artist" aria-required="true" />
           @if (songForm.get('releaseDate')!.hasError('required')) {
             <mat-error>Artist is required</mat-error>
           }
@@ -25,6 +25,7 @@
             matInput
             [matDatepicker]="picker"
             formControlName="releaseDate"
+            aria-required="true"
           />
           <mat-datepicker-toggle
             matIconSuffix
@@ -43,6 +44,8 @@
             class="right-align"
             formControlName="price"
             min="0"
+            step="0.01"
+            aria-required="true"
           />
           <span matTextPrefix>$&nbsp;</span>
           @if (songForm.get('price')!.hasError('required')) {
@@ -56,8 +59,13 @@
     </div>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button type="submit" mat-flat-button [disabled]="songsService.updating()">
+    <button mat-button mat-dialog-close aria-label="Cancel">Cancel</button>
+    <button
+      type="submit"
+      mat-flat-button
+      [disabled]="songsService.updating()"
+      aria-label="Save song"
+    >
       @if (!songsService.updating()) {
         {{ song ? 'Save' : 'Add' }}
       } @else {
